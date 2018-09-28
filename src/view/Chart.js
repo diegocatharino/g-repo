@@ -1,38 +1,51 @@
-import React, { Component } from 'react';
-import { connect }      from 'react-redux';
+import React from "react";
 import { Chart } from "react-google-charts";
 
-const ExampleChart = () => {
-  return (
-    <Chart
-      chartType="LineChart"
-      rows={[[8, 12], [4, 5.5], [11, 14], [4, 5], [3, 3.5], [6.5, 7]]}
-      columns={[
-        {
-          type: "number",
-          label: "Idade"
-        },
-        {
-          type: "number",
-          label: "Peso"
+class Dados extends React.Component {
+  constructor(props, state) {
+    super(props, state);
+
+    this.state = {
+      rows: [],
+      cols: [],
+      isLoading: false,
+      error: null
+    };
+  }
+
+  componentDidMount() {
+    fetch(
+      "https://api.github.com/search/repositories?q=user:globocom&sort=stars:desc&per_page=200"
+    )
+      .then(response => response.json())
+      .then(result => {
+        if (result.items) {
+          let items = result.items.map(item => {
+            console.log(item);
+            return [item.name, item.forks_count];
+          });
+          this.setState({
+            rows: [["name", "forks"], ...items]
+          });
         }
-      ]}
-      options={
-        // Chart options
-        {
-          title: "Idade vs. Peso",
-          hAxis: {
-            title: "Idade",
-            viewWindow: { min: 0, max: 15 }
-          },
-          vAxis: { title: "Peso", viewWindow: { min: 0, max: 15 } },
-          legend: "none"
-        }
-      }
-      width={"100%"}
-      height={"400px"}
-      legendToggle
-    />
-  );
-};
-export default ExampleChart;
+      });
+  }
+
+  render() {
+    console.log(this.state.rows);
+    return (
+      <div className={"chart-container"}>
+        <Chart
+          chartType="LineChart"
+          data={this.state.rows}
+          options={{}}
+          graph_id="LineChart"
+          width={"100%"}
+          height={"400px"}
+        />
+      </div>
+    );
+  }
+}
+
+export default Dados;
