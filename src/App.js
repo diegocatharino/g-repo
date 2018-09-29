@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { clickButton } from './actions';
 import logo from './logo.png';
 import './App.css';
-import Drawn from './view/Chart';
+import Fetch from './view/Fetch';
+import DropDown from './view/DropDown';
 
 
 class App extends Component {
@@ -15,8 +16,8 @@ class App extends Component {
         <header className="glb-topo">          
           <h1 className="App-title"><img src={logo} className="App-logo" alt="logo" />-Repo</h1>
         </header> 
-
-        <Drawn />
+        <DropDown />
+        <Fetch />
       </div>
     );
   }

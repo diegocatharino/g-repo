@@ -7,25 +7,22 @@ class Dados extends React.Component {
 
     this.state = {
       rows: [],
-      cols: [],
       isLoading: false,
       error: null
     };
   }
 
   componentDidMount() {
-    fetch(
-      "https://api.github.com/search/repositories?q=user:globocom&sort=stars:desc&per_page=200"
-    )
+    fetch("https://api.github.com/search/repositories?q=user:globocom&sort=stars:desc&per_page=200")
       .then(response => response.json())
       .then(result => {
         if (result.items) {
           let items = result.items.map(item => {
             console.log(item);
-            return [item.name, item.forks_count];
+            return [item.name, item.watchers];
           });
           this.setState({
-            rows: [["name", "forks"], ...items]
+            rows: [["name", "watchers"], ...items]
           });
         }
       });
