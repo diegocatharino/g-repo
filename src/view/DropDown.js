@@ -94,7 +94,7 @@ const mapDispatchToProps = dispatch => {
     mudaOpcoes: repositorio => {
       console.log(repositorio);
       fetch(
-        "https://api.github.com/repos/globocom/${repositorio.name}/stats/contributors"
+        `https://api.github.com/repos/globocom/${repositorio.name}/contributors`
       )
         .then(res => res.json())
         .then(result => {
@@ -103,7 +103,7 @@ const mapDispatchToProps = dispatch => {
             type: "BOXNUMEROS",
             numStars: repositorio ? repositorio.stargazers_count : 0,
             numForks: repositorio ? repositorio.forks_count : 0,
-            numContribs: repositorio ? repositorio.contributions : 0
+            numContribs: result ? result.length : false
           });
         });
     }
