@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { clickButton } from './actions';
 import logo from './logo.png';
 import './App.css';
-import Fetch from './view/Fetch';
-import DropDown from './view/DropDown';
+import Fetch from "./view/Fetch";
+import DropDown from "./view/DropDown";
+import BoxNumeros from "./view/BoxNumeros";
 
 
 class App extends Component {
@@ -17,11 +18,15 @@ class App extends Component {
           <h1 className="App-title"><img src={logo} className="App-logo" alt="logo" />-Repo</h1>
         </header> 
         <DropDown />
+        <BoxNumeros />
         <Fetch />
       </div>
     );
   }
 }
-
+const mapStateToProps = store => {
+  showLoader: store.showLoader;
+  showInfos: store.showInfos;
+};
   
 export default App;
