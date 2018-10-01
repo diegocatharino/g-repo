@@ -1,7 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Chart } from "react-google-charts";
 
-class Dados extends React.Component {
+class Grafico extends React.Component {
   constructor(props, state) {
     super(props, state);
 
@@ -11,9 +12,16 @@ class Dados extends React.Component {
       error: null
     };
   }
-
   componentDidMount() {
-    fetch("https://api.github.com/search/repositories?q=user:globocom&sort=stars:desc&per_page=200")
+    this.atualizaGrafico();
+  }
+
+  atualizaGrafico(url = null) {
+    const { relCommits, colMeses, rowCommits } = this.props;
+    if (url == null)
+      url =
+        "https://api.github.com/search/repositories?q=user:globocom&sort=stars:desc&per_page=200";
+    fetch(url)
       .then(response => response.json())
       .then(result => {
         if (result.items) {
@@ -29,20 +37,33 @@ class Dados extends React.Component {
   }
 
   render() {
+    const { relCommits, colMeses, rowCommits } = this.props;
     console.log(this.state.rows);
     return (
       <div className={"chart-container"}>
+        <div className="valor">COMMITS: {relCommits}</div>
+
         <Chart
+          width={window.window.innerWidth}
+          height={300}
           chartType="LineChart"
+          loader={<div>Loading Chart</div>}
           data={this.state.rows}
-          options={{}}
-          graph_id="LineChart"
-          width={"100%"}
-          height={"400px"}
+          options={{
+            intervals: { style: "sticks" },
+            legend: "none"
+          }}
         />
       </div>
     );
   }
 }
 
-export default Dados;
+const mapStateToProps = state => {
+  return {
+    relCommits: state.relCommits,
+    colMeses: state.colMeses,
+    rowCommits: state.rowCommits
+  };
+};
+export default connect(mapStateToProps)(Grafico);

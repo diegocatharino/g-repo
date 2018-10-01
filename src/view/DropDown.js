@@ -28,7 +28,7 @@ class DropDown extends Component {
         this.setState({
           data: data.items,
           repositoriosSelect: [
-            { value: "", display: "Escolha um repositório" }
+            { value: "null", display: "Escolha um repositório" }
           ].concat(items)
         });
       })
@@ -38,7 +38,7 @@ class DropDown extends Component {
   }
 
   render() {
-    const { mudaOpcoes, noRepositorio, repositorios } = this.props;
+    const { mudaOpcoes, noRepositorio, repositorios, mudaGrafico } = this.props;
     return (
       <div className="dropDown">
         <select
@@ -47,12 +47,13 @@ class DropDown extends Component {
             let selected = this.state.data.find(item => {
               return item.id == e.target.value;
             });
-            mudaOpcoes(selected);
             this.setState({
               selectedOption: e.target.value,
               validationError:
-                e.target.value === "" ? "Escolha um repositório" : ""
+                e.target.value === "null" ? "Escolha um repositório" : ""
             });
+            mudaOpcoes(selected);
+            mudaGrafico(selected);
           }}
         >
           {this.state.repositoriosSelect.map(item => (
@@ -75,7 +76,10 @@ const mapStateToProps = state => {
     repositorios: state.repositorios,
     numStars: state.numStars,
     numForks: state.numForks,
-    numContribs: state.numContribs
+    numContribs: state.numContribs,
+    relCommits: state.relCommits,
+    colMeses: state.colMeses,
+    rowCommits: state.rowCommits
   };
 };
 
@@ -90,7 +94,33 @@ const mapDispatchToProps = dispatch => {
           dispatch({ type: "CADAREPOSITORIO", payload: result.items });
         });
     },
-
+    mudaGrafico: grafico => {
+      console.log(grafico);
+      fetch(`https://api.github.com/repos/globocom/${grafico.name}/commits`)
+        .then(res => res.json())
+        .then(result => {
+          console.log(result);
+          dispatch({
+            type: "MUDAGRAFICO",
+            relCommits: result ? result.length : false,
+            colMeses: [
+              "Janeiro",
+              "Fevereiro",
+              "Março",
+              "Abril",
+              "Maio",
+              "Junho",
+              "Julho",
+              "Agosto",
+              "Setembro",
+              "Outubro",
+              "Novembro",
+              "Dezembro"
+            ],
+            rowCommits: result ? result.length : false
+          });
+        });
+    },
     mudaOpcoes: repositorio => {
       console.log(repositorio);
       fetch(
