@@ -19,18 +19,18 @@ Projeto em Reactjs + Redux que lista os repositórios do Globo.com no github, mo
 
 -  Clone o projeto para sua máquina:
 ```
-	(ssh) $ git clone https://github.com/diegocatharino/g-repo.git
+	git clone https://github.com/diegocatharino/g-repo.git
 ```
 
 - No seu bash terminal, configure os módulos de npm e o que foi usado, no diretório root:
 ```
 	cd g-repo
-	npm-install
+	npm install
 ```
 
 - Já pode startar o npm e carregar o projeto! A url de localhost (http://localhost:3000/) abrirá automaticamente no seu navegador.
 ```	
-	npm-start
+	npm start
 ```
 
 
