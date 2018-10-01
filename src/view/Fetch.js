@@ -41,8 +41,8 @@ class Grafico extends React.Component {
     console.log(this.state.rows);
     return (
       <div className={"chart-container"}>
-        <div className="valor">COMMITS: {relCommits}</div>
-
+        <div className="label commits">Commits: <strong>{rowCommits}</strong></div>
+        <div className="label watchers">Watchers: </div>
         <Chart
           width={window.window.innerWidth}
           height={300}

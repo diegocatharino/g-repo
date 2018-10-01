@@ -176,4 +176,8 @@ table {
   display: none;
 }
 
+.label.commits {
+  margin: 20px 0 60px;
+}
+
 /*# sourceMappingURL=style.css.map */
