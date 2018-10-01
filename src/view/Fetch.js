@@ -17,7 +17,6 @@ class Grafico extends React.Component {
   }
 
   atualizaGrafico(url = null) {
-    const { relCommits, colMeses, rowCommits } = this.props;
     if (url == null)
       url =
         "https://api.github.com/search/repositories?q=user:globocom&sort=stars:desc&per_page=200";
@@ -26,7 +25,6 @@ class Grafico extends React.Component {
       .then(result => {
         if (result.items) {
           let items = result.items.map(item => {
-            console.log(item);
             return [item.name, item.watchers];
           });
           this.setState({
@@ -37,8 +35,7 @@ class Grafico extends React.Component {
   }
 
   render() {
-    const { relCommits, colMeses, rowCommits } = this.props;
-    console.log(this.state.rows);
+    const { rowCommits } = this.props;
     return (
       <div className={"chart-container"}>
         <div className="label commits">Commits: <strong>{rowCommits}</strong></div>
@@ -61,8 +58,6 @@ class Grafico extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    relCommits: state.relCommits,
-    colMeses: state.colMeses,
     rowCommits: state.rowCommits
   };
 };

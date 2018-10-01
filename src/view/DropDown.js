@@ -33,7 +33,6 @@ class DropDown extends Component {
         });
       })
       .catch(error => {
-        console.log(error);
       });
   }
 
@@ -77,8 +76,6 @@ const mapStateToProps = state => {
     numStars: state.numStars,
     numForks: state.numForks,
     numContribs: state.numContribs,
-    relCommits: state.relCommits,
-    colMeses: state.colMeses,
     rowCommits: state.rowCommits
   };
 };
@@ -95,40 +92,21 @@ const mapDispatchToProps = dispatch => {
         });
     },
     mudaGrafico: grafico => {
-      console.log(grafico);
       fetch(`https://api.github.com/repos/globocom/${grafico.name}/commits`)
         .then(res => res.json())
         .then(result => {
-          console.log(result);
           dispatch({
-            type: "MUDAGRAFICO",
-            relCommits: result ? result.length : false,
-            colMeses: [
-              "Janeiro",
-              "Fevereiro",
-              "Março",
-              "Abril",
-              "Maio",
-              "Junho",
-              "Julho",
-              "Agosto",
-              "Setembro",
-              "Outubro",
-              "Novembro",
-              "Dezembro"
-            ],
+            type: "MUDAGRAFICO",            
             rowCommits: result ? result.length : false
           });
         });
     },
     mudaOpcoes: repositorio => {
-      console.log(repositorio);
       fetch(
         `https://api.github.com/repos/globocom/${repositorio.name}/contributors`
       )
         .then(res => res.json())
         .then(result => {
-          console.log(result);
           dispatch({
             type: "BOXNUMEROS",
             numStars: repositorio ? repositorio.stargazers_count : 0,
