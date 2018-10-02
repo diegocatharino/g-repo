@@ -92,7 +92,7 @@ const mapDispatchToProps = dispatch => {
         });
     },
     mudaGrafico: grafico => {
-      fetch(`https://api.github.com/repos/globocom/${grafico.name}/commits`)
+      fetch(`https://api.github.com/repos/globocom/${grafico.name}/commits?per_page=999999`)
         .then(res => res.json())
         .then(result => {
           dispatch({
