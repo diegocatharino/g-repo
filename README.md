@@ -65,3 +65,11 @@ Projeto em Reactjs + Redux que lista os repositórios do Globo.com no github, mo
 - https://www.npmjs.com/package/react-chartjs-2
 
 - https://api.github.com/search/repositories?q=user:globocom&sort=stars:desc&per_page=200
+
+- https://stackoverflow.com/questions/41888837/js-group-by-month-of-date-values-objects-in-an-array
+
+- http://www.linhadecodigo.com.br/artigo/2263/google-chart-api.aspx
+
+- https://developers.google.com/chart/image/docs/chart_params#gcharts_data_point_labels
+
+- https://www.w3schools.com/js/js_date_methods.asp

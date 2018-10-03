@@ -1,64 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Chart } from "react-google-charts";
 
-class Grafico extends React.Component {
-  constructor(props, state) {
-    super(props, state);
+class Grafico extends React.Component{
 
-    this.state = {
-      rows: [],
-      isLoading: false,
-      error: null
-    };
-  }
-  componentDidMount() {
-    this.atualizaGrafico();
-  }
+  render(){
 
-  atualizaGrafico(url = null) {
-    if (url == null)
-      url =
-        "https://api.github.com/search/repositories?q=user:globocom&sort=stars:desc&per_page=200";
-    fetch(url)
-      .then(response => response.json())
-      .then(result => {
-        if (result.items) {
-          let items = result.items.map(item => {
-            return [item.name, item.watchers];
-          });
-          this.setState({
-            rows: [["name", "watchers"], ...items]
-          });
-        }
-      });
-  }
+    const { graficoLink, rowCommits } = this.props;
 
-  render() {
-    const { rowCommits } = this.props;
-    return (
-      <div className={"chart-container"}>
+    if( !graficoLink ){
+      return( <div className="chart-container"><div className="label commits">Commits: <strong>{rowCommits}</strong></div></div> );  
+    }
+    //se não tiver parâmetro de link passando, não apresenta gráfico, se sim, carrega
+    return(
+      <div className="chart-container">
+        <h2>Commits</h2>
         <div className="label commits">Commits: <strong>{rowCommits}</strong></div>
-        <div className="label watchers">Watchers: </div>
-        <Chart
-          width={window.window.innerWidth}
-          height={300}
-          chartType="LineChart"
-          loader={<div>Loading Chart</div>}
-          data={this.state.rows}
-          options={{
-            intervals: { style: "sticks" },
-            legend: "none"
-          }}
-        />
+        <img alt="Commits" src={`http://chart.apis.google.com/chart?${graficoLink}`} />
       </div>
     );
   }
 }
-
 const mapStateToProps = state => {
   return {
-    rowCommits: state.rowCommits
+    rowCommits: state.rowCommits,
+    repositorio: state.repositorio,
+    graficoLink: state.graficoLink
   };
 };
 export default connect(mapStateToProps)(Grafico);

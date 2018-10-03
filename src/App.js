@@ -23,8 +23,6 @@ class App extends Component {
 }
 
 const mapStateToProps = store => {
-    showLoader: store.showLoader;
-    showInfos:  store.showInfos
 }
 
 export default connect(mapStateToProps)(App);
